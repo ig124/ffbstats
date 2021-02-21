@@ -4,7 +4,7 @@
 # to manually search for and delete/merge these extra occurrences to match their actual season. There are also some small differences in player name spelling
 # between PFR and NFLFastR.
 # Another big limitation is that PFR designates players who did not play with hash marks. This script doesn't read hash marks. So, if a player is "Q" but they
-# does not play, then this script still says they were active.
+# do not play, then this script still says they were active.
 
 library(tidyverse)
 library(readxl)
@@ -17,7 +17,7 @@ library(nflfastR)
 library('xml2')
 options(scipen = 9999)
 
-sched_loc <- "F:/Users/Ian/Documents/Fantasy Football/Fantasy Football R Directory/Injury Data/schedules/sched_2020.rds" 
+sched_loc <- "..<file location on computer>/sched_2020.rds" # https://github.com/guga31bb/nflfastR-data/tree/master/schedules
 sched_2020 <- readRDS(sched_loc)
 roster_2020 <- fast_scraper_roster(2020, pp=FALSE) %>%  #Roster data, this is a data.frame
   filter(!is.na(gsis_id)) # There are a few players without a gsis_id
@@ -71,7 +71,7 @@ inj_data_final <- left_join(inj_data, roster_2020_reduced, by = c('team', 'playe
 
 ### Export to Excel
 OUT <- createWorkbook()
-file="F:/Users/Ian/Documents/Fantasy Football/Fantasy Football R Directory/Injury Data/injuries_2020.xlsx"
+file="injuries_2020.xlsx"
 addWorksheet(OUT, "injury_data")
 writeData(OUT, sheet = "injury_data", x = inj_data_final)
 saveWorkbook(OUT, file)
